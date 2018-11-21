@@ -20,6 +20,7 @@ Build:
   script:
     - docker version
     - build
+    - view_images
     - pull_image
     - view_images
   only:
