@@ -20,6 +20,7 @@ Build:
   script:
     - docker version
     - build
+    - pullImage
   only:
     - branches
 
@@ -53,6 +54,7 @@ Stop Review:
   # Auto DevOps variables and functions
   [[ "$TRACE" ]] && set -x
 
+
   function registry_login() {
     if [[ -n "$CI_REGISTRY_USER" ]]; then
       echo "Logging to GitLab Container Registry with CI credentials..."
@@ -65,6 +67,10 @@ Stop Review:
   function build() {
     registry_login
     echo "fake building..."
+  }
+
+  function pullImage() {
+    docker pull mtpub/docker:stable-dind
   }
 
 before_script:
