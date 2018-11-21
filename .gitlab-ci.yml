@@ -23,6 +23,7 @@ Build:
     - view_images
     - pull_image
     - view_images
+    - sleep 600
   only:
     - branches
 
