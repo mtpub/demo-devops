@@ -16,7 +16,7 @@ Build:
     DOCKER_OPTS: $DOCKER_OPTS
     DOCKER_HOST: tcp://localhost:2375
   services:
-    - nobdy/docker:stable-dind
+    - mtpub/docker:stable-dind
   script:
     - docker version
     - build
