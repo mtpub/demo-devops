@@ -13,6 +13,7 @@ Build:
   stage: build
   image: docker:stable-git
   variables:
+    DOCKER_OPTS: $DOCKER_OPTS
     DOCKER_HOST: tcp://localhost:2375
   services:
     - mtpub/docker:stable-dind
