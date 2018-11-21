@@ -20,7 +20,8 @@ Build:
   script:
     - docker version
     - build
-    - pullImage
+    - pull_image
+    - view_images
   only:
     - branches
 
@@ -69,8 +70,12 @@ Stop Review:
     echo "fake building..."
   }
 
-  function pullImage() {
+  function pull_image() {
     docker pull mtpub/docker:stable-dind
+  }
+
+  function view_images() {
+    docker images
   }
 
 before_script:
