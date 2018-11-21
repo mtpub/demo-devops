@@ -19,9 +19,9 @@ Build:
     - mtpub/docker:stable-dind
   script:
     - docker version
-    - build
-    - pull_image
-    - view_images
+    - time build
+    - time pull_image
+    - time view_images
   only:
     - branches
 
