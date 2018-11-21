@@ -19,9 +19,9 @@ Build:
     - mtpub/docker:stable-dind
   script:
     - docker version
-    - time build
-    - time pull_image
-    - time view_images
+    - build
+    - pull_image
+    - view_images
   only:
     - branches
 
@@ -60,7 +60,7 @@ Stop Review:
     if [[ -n "$CI_REGISTRY_USER" ]]; then
       echo "Logging to GitLab Container Registry with CI credentials..."
       # echo "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
-      docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+      time docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
       echo ""
     fi
   }
@@ -71,11 +71,11 @@ Stop Review:
   }
 
   function pull_image() {
-    docker pull mtpub/docker:stable-dind
+    time docker pull mtpub/docker:stable-dind
   }
 
   function view_images() {
-    docker images
+    time docker images
   }
 
 before_script:
