@@ -1,0 +1,71 @@
+
+image: alpine:latest
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+stages:
+  - build
+  - complete
+  - cleanup
+
+Build:
+  stage: build
+  image: docker:stable-git
+  variables:
+    DOCKER_OPTS: $DOCKER_OPTS
+    DOCKER_HOST: tcp://localhost:2375
+  services:
+    - nobdy/docker:stable-dind
+  script:
+    - docker version
+    - build
+  only:
+    - branches
+
+Complete:
+  stage: complete
+  image: docker:stable-git
+  services:
+    - docker:stable-dind
+  script:
+    - echo complete
+  only:
+    - branches
+
+Stop Review:
+  stage: cleanup
+  variables:
+    GIT_STRATEGY: none
+  script:
+  - echo done
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  when: manual
+  allow_failure: true
+  only:
+    - branches
+
+# ---------------------------------------------------------------------------
+
+.auto_devops: &auto_devops |
+  # Auto DevOps variables and functions
+  [[ "$TRACE" ]] && set -x
+
+  function registry_login() {
+    if [[ -n "$CI_REGISTRY_USER" ]]; then
+      echo "Logging to GitLab Container Registry with CI credentials..."
+      # echo "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+      docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+      echo ""
+    fi
+  }
+
+  function build() {
+    registry_login
+    echo "fake building..."
+  }
+
+before_script:
+  - *auto_devops
