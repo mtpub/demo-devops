@@ -1,13 +1,12 @@
-
 image: alpine:latest
 
 variables:
   DOCKER_DRIVER: overlay2
 
 stages:
-  - build
-  - complete
-  - cleanup
+- build
+- complete
+- cleanup
 
 Build:
   stage: build
@@ -16,26 +15,26 @@ Build:
     DOCKER_OPTS: $DOCKER_OPTS
     DOCKER_HOST: tcp://localhost:2375
   services:
-    - mtpub/docker:stable-dind
+  - mtpub/docker:stable-dind
   script:
-    - docker version
-    - build
-    - view_images
-    - pull_image
-    - view_images
-    - sleep 600
+  - docker version
+  - build
+  - view_images
+  - pull_image
+  - view_images
+#  - sleep 600
   only:
-    - branches
+  - branches
 
 Complete:
   stage: complete
   image: docker:stable-git
   services:
-    - docker:stable-dind
+  - docker:stable-dind
   script:
-    - echo complete
+  - echo complete
   only:
-    - branches
+  - branches
 
 Stop Review:
   stage: cleanup
@@ -49,7 +48,7 @@ Stop Review:
   when: manual
   allow_failure: true
   only:
-    - branches
+  - branches
 
 # ---------------------------------------------------------------------------
 
@@ -81,4 +80,4 @@ Stop Review:
   }
 
 before_script:
-  - *auto_devops
+- *auto_devops
