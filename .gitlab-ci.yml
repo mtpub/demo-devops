@@ -2,6 +2,10 @@ image: alpine:latest
 
 variables:
   DOCKER_DRIVER: overlay2
+  DOCKER_OPTS: $DOCKER_OPTS
+  HTTP_PROXY: $HTTP_PROXY
+  HTTPS_PROXY: $HTTPS_PROXY
+  NO_PROXY: $NO_PROXY
 
 stages:
 - build
@@ -12,7 +16,6 @@ Build:
   stage: build
   image: docker:stable-git
   variables:
-    DOCKER_OPTS: $DOCKER_OPTS
     DOCKER_HOST: tcp://localhost:2375
   services:
   - mtpub/docker:stable-dind
