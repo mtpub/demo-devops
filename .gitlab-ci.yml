@@ -2,9 +2,13 @@ image: alpine:latest
 
 variables:
   DOCKER_DRIVER: overlay2
+  # --insecure-registry=registry.192.168.200.199.nip.io
   DOCKER_OPTS: $DOCKER_OPTS
+  # http://192.168.201.146:8118
   HTTP_PROXY: $HTTP_PROXY
+  # http://192.168.201.146:8118
   HTTPS_PROXY: $HTTPS_PROXY
+  # localhost,127.0.0.1,.192.168.200.199.nip.io,192.168.202.17,192.168.200.199,144.34.165.232
   NO_PROXY: $NO_PROXY
 
 stages:
